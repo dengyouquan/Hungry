@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+    
+    	<property name="connection.driver">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+		<property name="connection.url">jdbc:sqlserver://localhost:1433;DatabaseName=sshuser</property>
+		<property name="connection.username">sa</property>
+		<property name="connection.password">511322</property>
+    
+    	<property name="dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		<!-- 自动建表 -->
+		<property name="hbm2ddl.auto">update</property>  
+		
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+
+		<property name="current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</property>
+		
+		<mapping class="com.hungry.entities.User"/>
+		<mapping class="com.hungry.entities.Merchant"/>
+		<mapping class="com.hungry.entities.Goods"/>
+		<mapping class="com.hungry.entities.Order"/>
+    	<mapping class="com.hungry.entities.OrderItem"/>
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>外卖Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/stylemain.css" type="text/css"> 
+		<link rel="stylesheet" type="text/css" href="css/cart.css"> 
+			<!--<link rel="stylesheet" href="css/styleindex.css" />-->  
+		<script type="text/javascript" src="js/jquery-3.1.1.js" ></script> 
+		<script src="js/bootstrap.min.js"></script> 
+		<script type="text/javascript" src="js/vue.js" ></script>
+		<script type="text/javascript" src="js/vue-resource.js" ></script>
+		<!--<script src="js/jquery-1.11.3.min.js"></script>--> 
+		<script src="js/shop.min.js"></script>
+		<!-- <script>
+			window.onload=function(){
+				var cpro_id = "u2239328";
+				//$('body').ctshop({
+				$('.ct-pageWrapper').ctshop({ 
+				  currency: '$', 
+				  paypal: {
+					currency_code: 'RMB'
+				  },
+				  empty_text:'您敢信，你的购物车居然是空的！',
+				  
+				});
+			}
+		</script> -->
+		<style type="text/css">
+			.show{
+				display: block;
+			}
+			.hidden{
+				display: none;
+			}
+		</style>
+	</head>  
+ 
+	<body>
+		<div id="app">
+			
+			<header class="headbar">
+			  <div class="fullbg">
+			    <div class="row">
+			      <div class="col-md-2 col-md-offset-5 col-sm-6 col-sm-offset-3 col-xs-8">
+			        <h1 class="logo">外卖网站</h1>
+			      </div>
+			      
+			      <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+			        <nav class="navi navbar navbar-default" role="navigation"> 
+			          <div class="navbar-header">
+			            <button type="button" class="navbar-toggle collapsed navb" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+			          </div>
+			
+			          <div class="menubox collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			            <ul class="nav navbar-nav menu">
+			              <li><a href="#">主页</a></li> 
+			              <li><a class="old" href="#">旧版</a></li>
+			              <li><a href="#shoppingcart">市场/购物车</a></li>
+			              <li><a class="person" href="#">个人</a></li>
+			              <li><a href="#footer">关于</a></li>
+			              <li class="userreg"><a href="login.html">登录/注册</a></li>
+			              <li class="userlog"><a href="index.html">登出</a></li>
+			            </ul>
+			          </div>
+			        </nav>
+			      </div>
+			
+			      <div class="col-md-8 col-md-offset-2 col-xs-12 text-center text-banner">
+			        <h2>外卖系统</h2>
+			        <p>我们专注外卖20年</p>
+			      </div>
+			    </div> 
+			
+			  </div>
+			
+			</header>
+	
+			
+	
+			<div id="shoppingcart" class="menu-page">
+				<div class="ct-pageWrapper">
+				  <main>
+					<div class="container"> 
+					<p id="nonegoods" style="text-align: center;">当前商家没有菜品</p>
+					<p id="allgoods" style="text-align: center;">所有商家所有菜品</p>
+					<p id="merchantgoods" style="text-align: center;">当前商家所有菜品</p>
+					  <div class="row">
+					  	
+						<div class="col-md-9"> 
+						
+					 		<div class="row">
+								<div class="col-md-9">
+								 	<!-- <script type="text/javascript">
+										/*购物车*/
+										var cpro_id = "u2239328";
+									</script> -->
+								</div>
+							</div>
+			
+							<div class="row">
+						   		<div class="col-sm-4"  v-for="goods in goodss"> 
+									  <!--<div class="ct-product" >
+										<div class="image"><img src="images/product-02.jpg" alt=""></div>
+										<div class="inner"><a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
+										  <h2 class="ct-product-title">Cherry Straws</h2>
+										  <p class="ct-product-description">A very delicious macaroons ...</p><span class="ct-product-price">$34.99</span>
+										</div>
+									  </div>-->
+								  <div class="ct-product"> 
+									<div class="image ct-product-button"><img v-bind:src="goods.image" alt=""></div>
+									<div class="inner">
+										<div class="userid" id="userid" style="display: none;"></div>
+										<div class="userid" id="merchantid" style="display: none;"></div>
+										<a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
+									  	<h2 class="ct-product-title" id="ct-product-title">{{goods.id}}:{{goods.name}}</h2>
+									  	<p class="ct-product-description">{{goods.memo}}</p>
+									  	<span class="ct-product-price">${{goods.price}}</span>
+									</div>
+								  </div>
+								</div>
+						  		 
+					  		</div>
+						
+						</div>
+			  			
+			  			<div id="usercart" class="col-md-3" style="border: 1px solid black;">
+						  <div class="widget">
+								<h2 class="widget-header">购物车</h2>
+								<div class="ct-cart"></div>
+						  </div>
+						</div>
+						
+						<div id="merchantfunction" class="col-md-3" style="border: 1px solid black;">
+						  <div>
+						  		<!-- <a class="addgoods" href="#">添加商品</a> -->
+						  		<h1 style="text-align: center;">添加商品</h1>
+						  		<div>
+						  		<form class="merchantform" id="merchantform"  action="addgoods"  autocomplete="on" method="post" enctype="multipart/form-data"> 
+	                             	<p> 
+	                                    <label for="name" class="uname">商品名:</label>
+	                                    <input id="usernamesignup" name="name" required="required" type="text" placeholder="请输入商品名" />
+	                                </p>
+	                                <p> 
+	                                    <label for="price" class="uname">价　格:</label>
+	                                    <input id="usernamesignup" name="price" required="required" type="text" placeholder="请输入价格" />
+	                                </p>
+									 <p> 
+	                                    <label for="memo" class="youmail">备　注:</label>
+	                                    <input id="usernamesignup" name="memo" type="text" placeholder="请输入备注"/> 
+	                                </p>
+	                                <p> 
+	                                    <label for="image" class="youmail">图　片:</label>
+	                                    <input id="usernamesignup" name="image" required="required" type="file" placeholder="请输入图片"/> 
+	                                </p>
+	                                <input id="merid" value="" name="mid" required="required" type="hidden" /> 
+	                                <input type="submit"  value="提交" class="btn" style="margin-bottom: 30px;margin-left: 150px;margin-top: 20px;"/>
+	                             </form>
+						  			
+						  		</div>
+						  </div>
+						</div>
+						
+					</div>
+					</div>
+				  </main>
+				</div>
+	
+			</div>
+		
+			<!--<button v-on:click="getCart()">queryCart</button>
+			<button v-on:click="initCart()">initCart</button>-->
+			 
+			<div class="footer">
+				<div class="container">
+					<div class="footer-row">
+						<div class="menubox collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	            <ul class="nav navbar-nav menu">
+	              <li><a href="#">主页</a></li>
+	              <li><a class="old" href="#">旧版</a></li>
+	              <li><a href="#shoppingcart">市场/购物车</a></li>
+	              <li><a class="person" href="#">个人</a></li>
+	              <li><a href="#footer">关于</a></li>
+	            </ul>
+	          </div>
+					</div>
+				</div>
+		</div>
+		
+			<footer id='footer' class="footerinfo container-fluid">
+			  <div class="row">
+			    <div class="col-md-12 col-sm-12">
+			      <p>Copyright &copy; 2015.Company name All rights reserved.</p>
+			    </div>
+			  </div>
+			</footer>
+			
+			
+		</div>
+	</body> 
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+					goodss:[],
+					//g:"",
+					getUrl:"http://localhost:8080/Hungry3.2/testJson",
+					getUrlmid:"http://localhost:8080/Hungry3.2/testJsonm"
+			}, 
+			mounted: function () {
+			  this.$nextTick(function () {
+			    // 代码保证 this.$el 在 document 中
+			    console.log("nextTick")
+				this.getGoodss()
+			  })
+			},
+			methods:{
+				getGoodss:function(){
+					console.log("goods")
+					if(window.location.search.indexOf("mid")!=-1){
+						this.$http.get(this.getUrlmid,{"mid":window.location.search.split('id=')[1]})
+						.then(function(response){
+							this.goodss = response.data;
+							console.log("resdata length==0:")
+							console.log(response.data.length==0)
+							if(response.data.length==0){
+								$(function() {
+									$("#merchantgoods").addClass("hidden")
+									$("#allgoods").addClass("hidden")
+									$("#nonegoods").removeClass("hidden")
+									$("#usercart").addClass("hidden")
+									$("#merchantfunction").removeClass("hidden")
+									$("#merid").val(window.location.search.split('id=')[1]); 
+								})
+							}
+							console.log(this.goodss)
+	                   		//this.g = JSON.stringify(response.data);
+	                   		//console.log(this.goodss);
+						},function(reserr){
+							console.log(reserr)
+						})
+						.catch(function(response) {
+	            			console.log(response)
+	        			}) 
+					}else{
+						this.$http.get(this.getUrl)
+						.then(function(response){
+							this.goodss = response.data;
+							console.log(this.goodss)
+	                   		//this.g = JSON.stringify(response.data);
+	                   		//console.log(this.goodss);
+						},function(reserr){
+							console.log(reserr)
+						})
+						.catch(function(response) {
+	            			console.log(response)
+	        			}) 
+					}
+				},
+				getCart:function(){
+					console.log("ct-product:")
+					console.log($(".ct-product"))
+				},
+				initCart:function(){
+					console.log("initCart")
+					console.log($(".ct-product"))
+					var cpro_id = "u2239328";
+					//$('body').ctshop({
+					$('.ct-pageWrapper').ctshop({
+					  currency: '$', 
+					  paypal: {
+						currency_code: 'RMB'
+					  },
+					  empty_text:'您敢信，你的购物车居然是空的！',
+					  
+					});
+					console.log($(".ct-product"))
+				}
+			}
+		}) 
+	
+		
+		window.onload=function(){
+			setTimeout(function(){
+				document.getElementById("userid").innerHTML=window.location.search.split('id=')[1];
+				//alert("innerHTML"+document.getElementById("userid").innerHTML)
+				console.log(document.getElementById("userid"))
+				//var s = document.getElementById("ct-product-title").innerHTML;
+				//document.getElementById("ct-product-title").innerHTML = s+"+"+window.location.search.split('?id=')[1];
+				//alert(document.getElementById("ct-product-title").innerHTML);
+				/* console.log("cart")
+				 console.log($(".ct-product")) */ 
+				 //document.getElementById('merid').value = window.location.search.split('id=')[1];
+				 var cpro_id = "u2239328";
+				//$('body').ctshop({
+				$('.ct-pageWrapper').ctshop({
+				  currency: '$', 
+				  paypal: {
+					currency_code: 'RMB'
+				  },
+				  empty_text:'您敢信，你的购物车居然是空的！',
+				  
+				}); 
+				
+				//判断是商品是所有商品还是商家商品
+				if(window.location.search.indexOf("mid")!=-1){
+					//商家登录
+					$(function(){
+						//alert("商家登录")
+						$("#merchantgoods").removeClass("hidden")
+						$("#allgoods").addClass("hidden")
+						$("#usercart").addClass("hidden")
+						$("#merchantfunction").removeClass("hidden")
+						$("#nonegoods").addClass("hidden")
+						$("#merid").val(window.location.search.split('id=')[1]);
+						alert($("#merid").val());
+					})
+				}else{
+					//alert("用户登录")
+					$("#merchantgoods").addClass("hidden")
+					$("#allgoods").removeClass("hidden")
+					$("#usercart").removeClass("hidden")
+					$("#merchantfunction").addClass("hidden")
+					$("#nonegoods").addClass("hidden")
+				}
+					/* if(window.location.search.indexOf("id")!=-1){
+						$(function(){
+							alert("用户登录")
+							$("#merchantgoods").addClass("hidden")
+							$("#allgoods").removeClass("hidden")
+							$("#usercart").removeClass("hidden")
+							$("#merchantfunction").addClass("hidden")
+							$("#nonegoods").addClass("hidden")
+						})
+					}else{
+						$(function(){
+							alert("未登录")
+							$("#merchantgoods").addClass("hidden")
+							$("#allgoods").removeClass("hidden")
+							$("#usercart").removeClass("hidden")
+							$("#merchantfunction").addClass("hidden")
+							$("#nonegoods").addClass("hidden")
+						})
+					} */
+				
+				
+				//判断是登录与否
+				if(window.location.search!=""){
+					$(function(){
+						$(".userlog").removeClass("hidden")
+						$(".userreg").addClass("hidden")
+					})
+				}else{
+					$(function(){
+						$(".userlog").addClass("hidden")
+						$(".userreg").removeClass("hidden")
+					})	
+				}
+				
+				
+			}, 100); 
+		}
+		
+			
+		function post(URL, PARAMS) {        
+		    var temp = document.createElement("form");        
+		    temp.action = URL;        
+		    temp.method = "post";        
+		    temp.style.display = "none";        
+		    for (var x in PARAMS) {        
+		        var opt = document.createElement("textarea");        
+		        opt.name = x;        
+		        opt.value = PARAMS[x];        
+		        // alert(opt.name)        
+		        temp.appendChild(opt);        
+		    }        
+		    document.body.appendChild(temp);        
+		    temp.submit();        
+		    return temp;        
+		} 
+			
+		//监听购物车事件
+		function check(){
+			if(window.location.search!=""){
+				if(window.location.search.indexOf("mid")!=-1){
+					alert("商家登录")	 
+				}else{ 
+					//alert(window.location.search.split('?id=')[1])
+					/* document.getElementById("userid").innerHTML=window.location.search.split('?id=')[1];
+					alert(document.getElementById("userid").innerHTML)
+					console.log(document.getElementById("userid")) */
+					console.log(this);
+					//this.attr("id",window.location.search.split('?id=')[1]);
+					return true; 
+					//post('http://localhost:8080/Hungry3.2/', {uid :window.location.search.split('?id=')[1]); 
+					//clear 
+				}
+			}else{
+				alert("没有登录")	 
+			}
+        	return false;
+        }
+		
+		
+		//Jquery
+		//监听购物车事件
+		$(function(){
+			$(".person").click(function(){
+				if(window.location.search!=""){
+					if(window.location.search.indexOf("mid")!=-1){
+						//alert("商家登录")
+						this.href="http://localhost:8080/Hungry3.2/merchantMessage/"+window.location.search.split('id=')[1];
+						//alert(this.href)
+						this.submit()
+					}else{
+						//alert("用户登录")
+						this.href="http://localhost:8080/Hungry3.2/userMessage/"+window.location.search.split('id=')[1];
+						//alert(this.href)
+						this.submit()
+					}
+				}else{
+					alert("没有登录")	
+					return false;
+				}
+			})
+			
+			
+			$(".old").click(function(){
+					this.href="http://localhost:8080/Hungry3.2/old";
+					alert(this.href)
+					this.submit()
+			})
+		})
+	</script>
+</html>
+
